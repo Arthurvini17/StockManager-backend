@@ -5,14 +5,12 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["multiSchema"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  schemas  = ["stockmanager"]
 }
 
 model Product {
@@ -22,6 +20,4 @@ model Product {
   price        Float
   quantity     Int
   category     String
-
-  @@schema("stockmanager")
 }

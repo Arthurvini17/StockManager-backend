@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //importando as rotas
-const ProductRoutes = require('./routes/ProductRoutes');
+const ProductRoutes = require('./routes/productRoutes');
 
 //usando as rotas
 app.use('/products', ProductRoutes);
