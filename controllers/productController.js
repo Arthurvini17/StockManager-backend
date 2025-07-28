@@ -1,16 +1,28 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
+const { search } = require('../routes/productRoutes');
 const Prisma = new PrismaClient();
 
 module.exports = {
     GetAllProducts: async (req, res) => {
+        const { search } = req.query;
         try {
 
-            const product = await Prisma.product.findMany({})
+            const product = await Prisma.product.findMany({
+                where: search
+                    ? {
+                        Product_name: {
+                            contains: search,
+                            mode: 'insensitive'
+
+                        }
+                    }
+                    : {}
+            });
             if (product.length === 0) {
                 return res.status(404).json({ message: 'Não existe produtos' })
             }
-            return res.status(200).json({ message: 'teste', product })
+            return res.status(200).json(product)
         } catch (error) {
             return res.status(500).json({ message: 'Erro no servidor', error })
         }
@@ -29,7 +41,7 @@ module.exports = {
             });
 
             if (!product) {
-                return res.status(404).json({ message: 'Produto não encontrado' });
+                return res.status(404).json({ product });
             }
             return res.status(200).json({ message: 'Produto encontrado:', product })
         } catch (error) {
