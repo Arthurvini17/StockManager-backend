@@ -14,7 +14,6 @@ module.exports = {
                         Product_name: {
                             contains: search,
                             mode: 'insensitive'
-
                         }
                     }
                     : {}
@@ -61,7 +60,7 @@ module.exports = {
                 where: { id: Number(id) }
             })
 
-            return res.status(200).json({ message: 'Produto deletado', product });
+            return res.status(200).json({ message: 'Produto deletado com sucesso', product });
         } catch (error) {
 
             return res.status(404).json({ message: 'Error', error })
@@ -76,6 +75,8 @@ module.exports = {
             const product = await Prisma.product.create({
                 data: { Product_name, description, price, category, quantity }
             });
+
+            console.log('Recebido:', req.body)
 
             res.status(201).json({ message: 'Produto criado', product });
         } catch (error) {
